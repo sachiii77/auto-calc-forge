@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { CalculatorDescriptionForm } from "@/components/CalculatorDescriptionForm";
 import { CalculatorRunner } from "@/components/CalculatorRunner";
 import { calculatorTemplates, findBestCalculatorTemplate } from "@/data/calculatorTemplates";
@@ -9,11 +9,11 @@ const Index = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleGenerate = async (description: string) => {
+  const handleGenerate = useCallback(async (description: string) => {
     setIsGenerating(true);
     
-    // Simulate AI processing time
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate AI processing time (reduced for better UX)
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     // Find best matching calculator template
     const calculatorType = findBestCalculatorTemplate(description);
@@ -23,12 +23,12 @@ const Index = () => {
     setIsGenerating(false);
     
     toast.success("Calculator generated successfully!");
-  };
+  }, []);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     setCurrentView('form');
     setSelectedCalculator(null);
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-bg">
