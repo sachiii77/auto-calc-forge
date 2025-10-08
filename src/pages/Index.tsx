@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { Navigation } from "@/components/Navigation";
 import { CalculatorDescriptionForm } from "@/components/CalculatorDescriptionForm";
 import { CalculatorRunner } from "@/components/CalculatorRunner";
 import { calculatorTemplates, findBestCalculatorTemplate } from "@/data/calculatorTemplates";
@@ -32,6 +33,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-bg">
+      <Navigation />
       <div className="container mx-auto px-4 py-8">
         {currentView === 'form' ? (
           <CalculatorDescriptionForm 
