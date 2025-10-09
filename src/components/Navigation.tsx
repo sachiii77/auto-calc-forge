@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calculator, Sparkles, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -7,7 +7,13 @@ import { useAuth } from "@/hooks/useAuth";
 export const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   const navItems = [
     { path: "/", label: "Home" },
@@ -61,7 +67,7 @@ export const Navigation = () => {
                     Dashboard
                   </Link>
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => signOut()}>
+                <Button variant="outline" size="sm" onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
                 </Button>
@@ -117,7 +123,7 @@ export const Navigation = () => {
                     </Link>
                   </Button>
                   <Button variant="outline" size="sm" className="w-full" onClick={() => {
-                    signOut();
+                    handleSignOut();
                     setMobileMenuOpen(false);
                   }}>
                     <LogOut className="w-4 h-4 mr-2" />

@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 interface AuthContextType {
@@ -19,7 +18,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -55,7 +53,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     if (!error) {
       toast.success('Account created successfully!');
-      navigate('/dashboard');
     }
     
     return { error };
@@ -69,7 +66,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     if (!error) {
       toast.success('Welcome back!');
-      navigate('/dashboard');
     }
     
     return { error };
@@ -80,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setSession(null);
     toast.success('Signed out successfully');
-    navigate('/');
   };
 
   return (

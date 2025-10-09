@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Calculator, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ const Auth = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { signIn, signUp } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +48,8 @@ const Auth = () => {
         } else {
           setErrors({ general: error.message });
         }
+      } else {
+        navigate('/dashboard');
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
