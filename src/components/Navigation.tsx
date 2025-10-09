@@ -1,17 +1,20 @@
 import { Link, useLocation } from "react-router-dom";
-import { Calculator, Sparkles, Menu, X } from "lucide-react";
+import { Calculator, Sparkles, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/features", label: "Features" },
     { path: "/gallery", label: "Gallery" },
     { path: "/about", label: "About" },
+    ...(user ? [{ path: "/dashboard", label: "Dashboard" }] : []),
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -49,13 +52,33 @@ export const Navigation = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button variant="hero" size="sm" asChild>
-              <Link to="/">
-                <Sparkles className="w-4 h-4 mr-2" />
-                Create Calculator
-              </Link>
-            </Button>
+          <div className="hidden md:flex items-center gap-2">
+            {user ? (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/dashboard">
+                    <User className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => signOut()}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/auth">Sign In</Link>
+                </Button>
+                <Button variant="hero" size="sm" asChild>
+                  <Link to="/auth">
+                    <Sparkles className="w-4 h-4 mr-2" />
+                    Get Started
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,13 +107,38 @@ export const Navigation = () => {
                 {item.label}
               </Link>
             ))}
-            <div className="pt-2">
-              <Button variant="hero" size="sm" className="w-full" asChild>
-                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Create Calculator
-                </Link>
-              </Button>
+            <div className="pt-2 space-y-2">
+              {user ? (
+                <>
+                  <Button variant="ghost" size="sm" className="w-full" asChild>
+                    <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                      <User className="w-4 h-4 mr-2" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="sm" className="w-full" onClick={() => {
+                    signOut();
+                    setMobileMenuOpen(false);
+                  }}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" className="w-full" asChild>
+                    <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                      Sign In
+                    </Link>
+                  </Button>
+                  <Button variant="hero" size="sm" className="w-full" asChild>
+                    <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Get Started
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
