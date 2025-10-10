@@ -12,3 +12,13 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://lovable.dev/sitemap.xml
+
+# Crawl-delay for bots
+User-agent: *
+Crawl-delay: 1
+
+# Disallow specific bots if needed
+User-agent: AhrefsBot
+Crawl-delay: 5

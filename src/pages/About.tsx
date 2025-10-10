@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Target, Users, Zap, Heart } from "lucide-react";
@@ -28,11 +29,33 @@ const About = () => {
     }
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Everything Calculator",
+    "description": "Learn about our mission to make calculator creation accessible to everyone through AI-powered technology.",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Everything Calculator",
+      "description": "AI-powered calculator generator platform",
+      "foundingDate": "2024",
+      "url": typeof window !== "undefined" ? window.location.origin : ""
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-bg">
-      <Navigation />
-      
-      <main className="container mx-auto px-4 py-12">
+    <>
+      <SEO
+        title="About Us - Our Mission to Democratize Calculator Creation"
+        description="Learn about Everything Calculator's mission to make calculator creation accessible to everyone. Empowering 5,000+ users with AI-powered calculator generation."
+        keywords="about calculator generator, AI calculator mission, calculator creation platform, custom calculator tools"
+        type="article"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gradient-bg">
+        <Navigation />
+        
+        <main className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
@@ -40,7 +63,7 @@ const About = () => {
             About CalcForge
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
             Empowering Everyone to Create Calculators
           </h1>
           
@@ -50,8 +73,8 @@ const About = () => {
         </div>
 
         {/* Story Section */}
-        <div className="max-w-4xl mx-auto space-y-12 mb-16">
-          <Card className="p-8 space-y-6 shadow-card border-0 bg-card/50 backdrop-blur-sm animate-fade-in">
+        <section className="max-w-4xl mx-auto space-y-12 mb-16">
+          <article className="p-8 space-y-6 shadow-card border-0 glass animate-fade-in rounded-lg">
             <h2 className="text-3xl font-bold text-foreground">Our Story</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
@@ -69,26 +92,26 @@ const About = () => {
                 finance, and more. We're proud to be democratizing access to custom calculation tools.
               </p>
             </div>
-          </Card>
+          </article>
 
           {/* Mission Section */}
-          <div className="text-center space-y-6 animate-fade-in">
+          <section className="text-center space-y-6 animate-fade-in">
             <h2 className="text-3xl font-bold text-foreground">Our Mission</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               To make calculator creation so simple and fast that anyone can bring their calculation ideas to life, 
               empowering better decision-making through accessible tools.
             </p>
-          </div>
+          </section>
 
           {/* Values Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
             {values.map((value, index) => (
               <Card 
                 key={index}
-                className="p-6 space-y-4 hover:shadow-card transition-all duration-300 border-0 bg-card/50 backdrop-blur-sm"
+                className="p-6 space-y-4 hover-lift glass"
               >
-                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                  <value.icon className="w-6 h-6 text-primary-foreground" />
+                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center" aria-label={value.title}>
+                  <value.icon className="w-6 h-6 text-primary-foreground" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground">
                   {value.title}
@@ -98,10 +121,10 @@ const About = () => {
                 </p>
               </Card>
             ))}
-          </div>
+          </section>
 
           {/* Stats Section */}
-          <Card className="p-8 bg-gradient-primary text-primary-foreground shadow-primary border-0 animate-fade-in">
+          <section className="p-8 bg-gradient-primary text-primary-foreground shadow-primary border-0 animate-fade-in rounded-lg" aria-label="Platform statistics">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-4xl font-bold mb-2">10,000+</div>
@@ -116,11 +139,11 @@ const About = () => {
                 <div className="text-primary-foreground/80">Uptime</div>
               </div>
             </div>
-          </Card>
-        </div>
+          </section>
+        </section>
 
         {/* CTA Section */}
-        <div className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
+        <section className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground">
             Join Our Community
           </h2>
@@ -133,9 +156,10 @@ const About = () => {
               Get Started Free
             </Link>
           </Button>
-        </div>
+        </section>
       </main>
     </div>
+    </>
   );
 };
 

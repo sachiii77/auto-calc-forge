@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Zap, Code2, Share2, History, Lock, Palette, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,11 +57,29 @@ const Features = () => {
     }
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": features.map((feature, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": feature.title,
+      "description": feature.description
+    }))
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-bg">
-      <Navigation />
-      
-      <main className="container mx-auto px-4 py-12">
+    <>
+      <SEO
+        title="Features - AI Calculator Generator"
+        description="Discover powerful features: AI-powered generation, lightning-fast creation, production-ready calculators, secure & private, beautiful design, and more."
+        keywords="calculator features, AI generation, fast calculator creation, secure calculator, calculator history"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gradient-bg">
+        <Navigation />
+        
+        <main className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
@@ -68,7 +87,7 @@ const Features = () => {
             Powerful Features
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
             Everything You Need to Create Calculators
           </h1>
           
@@ -101,7 +120,7 @@ const Features = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
+        <section className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground">
             Ready to Create Your Calculator?
           </h2>
@@ -114,9 +133,10 @@ const Features = () => {
               Get Started Free
             </Link>
           </Button>
-        </div>
+        </section>
       </main>
     </div>
+    </>
   );
 };
 

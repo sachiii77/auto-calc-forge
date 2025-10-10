@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -74,11 +75,35 @@ const Gallery = () => {
 
   const categories = ["All", "Finance", "Health", "Tools", "Education"];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Calculator Gallery",
+    "description": "Browse our collection of example calculators including BMI, mortgage, investment, calorie, and more.",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": calculators.map((calc, index) => ({
+        "@type": "SoftwareApplication",
+        "position": index + 1,
+        "name": calc.title,
+        "description": calc.description,
+        "applicationCategory": calc.category
+      }))
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-bg">
-      <Navigation />
-      
-      <main className="container mx-auto px-4 py-12">
+    <>
+      <SEO
+        title="Calculator Gallery - Browse Calculator Examples"
+        description="Explore calculator examples: BMI, mortgage, investment, calorie, unit converter, salary, GPA, tip, and retirement calculators. Create your own with AI."
+        keywords="calculator examples, BMI calculator, mortgage calculator, investment calculator, calorie calculator, tip calculator"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gradient-bg">
+        <Navigation />
+        
+        <main className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
@@ -86,7 +111,7 @@ const Gallery = () => {
             Calculator Gallery
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
             Explore Example Calculators
           </h1>
           
@@ -140,7 +165,7 @@ const Gallery = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
+        <section className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground">
             Create Your Own Custom Calculator
           </h2>
@@ -153,9 +178,10 @@ const Gallery = () => {
               Start Building Now
             </Link>
           </Button>
-        </div>
+        </section>
       </main>
     </div>
+    </>
   );
 };
 

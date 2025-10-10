@@ -29,11 +29,11 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8 animate-fade-in">
+    <section className="w-full max-w-4xl mx-auto space-y-8 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary animate-slide-in-up">
-          <Sparkles className="w-4 h-4 animate-pulse" />
+      <header className="text-center space-y-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary animate-slide-in-up" role="status">
+          <Sparkles className="w-4 h-4 animate-pulse" aria-hidden="true" />
           AI-Powered Calculator Generator
         </div>
         
@@ -46,10 +46,10 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Simply describe the calculator you need, and our AI will generate a fully functional calculator for you in seconds.
         </p>
-      </div>
+      </header>
 
       {/* Main Form */}
-      <Card className="p-8 shadow-card border-0 glass hover-lift animate-fade-in">
+      <Card className="p-8 shadow-card border-0 glass hover-lift animate-fade-in" role="form" aria-label="Calculator description form">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-3">
             <label htmlFor="description" className="text-lg font-semibold text-foreground block">
@@ -71,15 +71,16 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
             size="lg"
             disabled={!description.trim() || isGenerating}
             className="w-full"
+            aria-label="Generate calculator based on description"
           >
             {isGenerating ? (
               <>
-                <Zap className="w-5 h-5 mr-2 animate-pulse" />
+                <Zap className="w-5 h-5 mr-2 animate-pulse" aria-hidden="true" />
                 Generating Calculator...
               </>
             ) : (
               <>
-                <Calculator className="w-5 h-5 mr-2" />
+                <Calculator className="w-5 h-5 mr-2" aria-hidden="true" />
                 Generate Calculator
               </>
             )}
@@ -88,7 +89,7 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
       </Card>
 
       {/* Examples */}
-      <div className="space-y-4">
+      <aside className="space-y-4" aria-label="Calculator examples">
         <h3 className="text-lg font-semibold text-center text-foreground">
           Or try one of these examples:
         </h3>
@@ -99,12 +100,13 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
               onClick={() => setDescription(example)}
               disabled={isGenerating}
               className="p-4 text-left text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg border border-border/30 hover:border-border transition-all duration-200 hover-lift disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label={`Use example: ${example}`}
             >
               "{example}"
             </button>
           ))}
         </div>
-      </div>
-    </div>
+      </aside>
+    </section>
   );
 };

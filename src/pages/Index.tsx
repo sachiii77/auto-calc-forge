@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
+import { SEO } from "@/components/SEO";
 import { CalculatorDescriptionForm } from "@/components/CalculatorDescriptionForm";
 import { CalculatorRunner } from "@/components/CalculatorRunner";
 import { calculatorTemplates, findBestCalculatorTemplate } from "@/data/calculatorTemplates";
@@ -31,23 +32,54 @@ const Index = () => {
     setSelectedCalculator(null);
   }, []);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Everything Calculator",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "AI-powered calculator generator that creates custom calculators instantly",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "AI-Powered Calculator Generation",
+      "BMI Calculator",
+      "Mortgage Calculator",
+      "Compound Interest Calculator",
+      "Tip Calculator",
+      "Calorie Calculator",
+      "GPA Calculator"
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-bg">
-      <Navigation />
-      <div className="container mx-auto px-4 py-8">
-        {currentView === 'form' ? (
-          <CalculatorDescriptionForm 
-            onGenerate={handleGenerate}
-            isGenerating={isGenerating}
-          />
-        ) : selectedCalculator ? (
-          <CalculatorRunner
-            config={calculatorTemplates[selectedCalculator]}
-            onBack={handleBack}
-          />
-        ) : null}
+    <>
+      <SEO
+        title="Everything Calculator - AI-Powered Calculator Generator"
+        description="Describe any calculator you need and get it instantly. Create BMI, mortgage, compound interest, tip, calorie, and GPA calculators powered by AI."
+        keywords="calculator generator, AI calculator, BMI calculator, mortgage calculator, compound interest calculator, tip calculator, calorie calculator, GPA calculator"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gradient-bg">
+        <Navigation />
+        <main className="container mx-auto px-4 py-8">
+          {currentView === 'form' ? (
+            <CalculatorDescriptionForm 
+              onGenerate={handleGenerate}
+              isGenerating={isGenerating}
+            />
+          ) : selectedCalculator ? (
+            <CalculatorRunner
+              config={calculatorTemplates[selectedCalculator]}
+              onBack={handleBack}
+            />
+          ) : null}
+        </main>
       </div>
-    </div>
+    </>
   );
 };
 
