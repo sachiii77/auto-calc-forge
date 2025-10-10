@@ -29,15 +29,15 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8">
+    <div className="w-full max-w-4xl mx-auto space-y-8 animate-fade-in">
       {/* Hero Section */}
       <div className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
-          <Sparkles className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary animate-slide-in-up">
+          <Sparkles className="w-4 h-4 animate-pulse" />
           AI-Powered Calculator Generator
         </div>
         
-        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
+        <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary leading-tight animate-scale-in">
           Describe Any Calculator,
           <br />
           Get It Instantly
@@ -49,7 +49,7 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
       </div>
 
       {/* Main Form */}
-      <Card className="p-8 shadow-card border-0 bg-card/50 backdrop-blur-sm">
+      <Card className="p-8 shadow-card border-0 glass hover-lift animate-fade-in">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-3">
             <label htmlFor="description" className="text-lg font-semibold text-foreground block">
@@ -98,7 +98,7 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
               key={index}
               onClick={() => setDescription(example)}
               disabled={isGenerating}
-              className="p-4 text-left text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg border border-border/30 hover:border-border transition-all duration-200 hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-4 text-left text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg border border-border/30 hover:border-border transition-all duration-200 hover-lift disabled:opacity-50 disabled:cursor-not-allowed"
             >
               "{example}"
             </button>
