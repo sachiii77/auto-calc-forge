@@ -3,6 +3,7 @@ import { Calculator, Sparkles, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Navigation = () => {
   const location = useLocation();
@@ -59,6 +60,7 @@ export const Navigation = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
             {user ? (
               <>
                 <Button variant="ghost" size="sm" asChild>
@@ -114,6 +116,10 @@ export const Navigation = () => {
               </Link>
             ))}
             <div className="pt-2 space-y-2">
+              <div className="px-4 py-2 flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Theme</span>
+                <ThemeToggle />
+              </div>
               {user ? (
                 <>
                   <Button variant="ghost" size="sm" className="w-full" asChild>

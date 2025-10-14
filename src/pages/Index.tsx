@@ -3,13 +3,16 @@ import { Navigation } from "@/components/Navigation";
 import { SEO } from "@/components/SEO";
 import { CalculatorDescriptionForm } from "@/components/CalculatorDescriptionForm";
 import { CalculatorRunner } from "@/components/CalculatorRunner";
+import { CalculatorHistory } from "@/components/CalculatorHistory";
 import { calculatorTemplates, findBestCalculatorTemplate } from "@/data/calculatorTemplates";
 import { toast } from "sonner";
+import { useCalculatorHistory } from "@/hooks/useCalculatorHistory";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<'form' | 'calculator'>('form');
   const [selectedCalculator, setSelectedCalculator] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const { addToHistory } = useCalculatorHistory();
 
   const handleGenerate = useCallback(async (description: string) => {
     setIsGenerating(true);
@@ -19,13 +22,20 @@ const Index = () => {
     
     // Find best matching calculator template
     const calculatorType = findBestCalculatorTemplate(description);
+    const calculator = calculatorTemplates[calculatorType];
+    
+    // Add to history
+    addToHistory({
+      title: calculator.title,
+      description: description,
+    });
     
     setSelectedCalculator(calculatorType);
     setCurrentView('calculator');
     setIsGenerating(false);
     
     toast.success("Calculator generated successfully!");
-  }, []);
+  }, [addToHistory]);
 
   const handleBack = useCallback(() => {
     setCurrentView('form');
@@ -67,10 +77,13 @@ const Index = () => {
         <Navigation />
         <main className="container mx-auto px-4 py-8">
           {currentView === 'form' ? (
-            <CalculatorDescriptionForm 
-              onGenerate={handleGenerate}
-              isGenerating={isGenerating}
-            />
+            <>
+              <CalculatorDescriptionForm 
+                onGenerate={handleGenerate}
+                isGenerating={isGenerating}
+              />
+              <CalculatorHistory />
+            </>
           ) : selectedCalculator ? (
             <CalculatorRunner
               config={calculatorTemplates[selectedCalculator]}
