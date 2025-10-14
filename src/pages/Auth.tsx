@@ -41,12 +41,11 @@ const Auth = () => {
         : await signUp(validated.email, validated.password, validated.fullName || "");
 
       if (error) {
-        if (error.message.includes("already registered")) {
-          setErrors({ email: "This email is already registered" });
-        } else if (error.message.includes("Invalid login credentials")) {
-          setErrors({ password: "Invalid email or password" });
+        // Generic error messages to prevent user enumeration
+        if (isLogin) {
+          setErrors({ general: "Invalid credentials" });
         } else {
-          setErrors({ general: error.message });
+          setErrors({ general: "Unable to create account. Please try again." });
         }
       } else {
         navigate('/dashboard');

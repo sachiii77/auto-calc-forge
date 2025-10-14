@@ -3,6 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Calculator, Zap } from "lucide-react";
+import { z } from "zod";
+import { toast } from "sonner";
+
+const calculatorDescriptionSchema = z.object({
+  description: z.string()
+    .trim()
+    .min(10, { message: "Description must be at least 10 characters" })
+    .max(500, { message: "Description must be less than 500 characters" })
+});
 
 interface CalculatorDescriptionFormProps {
   onGenerate: (description: string) => void;
@@ -14,9 +23,15 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (description.trim()) {
-      onGenerate(description.trim());
+    
+    const result = calculatorDescriptionSchema.safeParse({ description });
+    
+    if (!result.success) {
+      toast.error(result.error.errors[0].message);
+      return;
     }
+    
+    onGenerate(result.data.description);
   };
 
   const examples = [
@@ -60,9 +75,13 @@ export const CalculatorDescriptionForm = ({ onGenerate, isGenerating = false }: 
               placeholder="Example: A BMI calculator that takes height and weight and shows health categories..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              maxLength={500}
               className="min-h-[120px] text-base resize-none border-border/50 focus:border-primary transition-colors"
               disabled={isGenerating}
             />
+            <p className="text-xs text-muted-foreground mt-1">
+              {description.length}/500 characters
+            </p>
           </div>
 
           <Button
