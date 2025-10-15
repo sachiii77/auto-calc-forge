@@ -6,6 +6,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  Timestamp,
 } from 'firebase/firestore';
 import { firestore } from '@/integrations/firebase/client';
 import { Calculator } from '@/types/calculator';
@@ -15,18 +16,16 @@ const calculatorsCollection = collection(firestore, 'calculators');
 
 export const getCalculators = async (): Promise<Calculator[]> => {
   const snapshot = await getDocs(calculatorsCollection);
-  const calculators: Calculator[] = [];
-  snapshot.forEach((doc) => {
+  const calculators: Calculator[] = snapshot.docs.map(doc => {
     const data = doc.data();
-    calculators.push({
+    return {
       id: doc.id,
-      templateId: data.templateId,
       name: data.name,
       description: data.description,
-      createdAt: data.createdAt,
       uses: data.uses,
-      // Ensure all fields from the Calculator type are mapped
-    });
+      createdAt: data.createdAt,
+      templateId: data.templateId || 'default-template',
+    } as Calculator;
   });
   return calculators;
 };
@@ -54,10 +53,8 @@ export const createCalculator = async (description: string): Promise<Calculator>
   }
 
   const newCalculatorData = {
-    templateId: template.id,
-    name: template.title,
-    description: template.description,
-    createdAt: new Date().toISOString(),
+    ...template,
+    createdAt: Timestamp.fromDate(new Date()), // Corrected line
     uses: 0,
   };
 
@@ -66,7 +63,7 @@ export const createCalculator = async (description: string): Promise<Calculator>
   return {
     id: docRef.id,
     ...newCalculatorData,
-  };
+  } as Calculator;
 };
 
 export const deleteCalculator = async (id: string): Promise<void> => {

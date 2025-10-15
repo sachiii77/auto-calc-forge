@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User } from 'firebase/auth';
 import { signInWithGoogle, signOut as firebaseSignOut, onAuthStateChanged } from '@/services/authService';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast'; // Corrected import
 
 interface AuthContextType {
   user: User | null;
@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast(); // Corrected hook
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged((user) => {
@@ -35,14 +36,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signIn = async () => {
     const user = await signInWithGoogle();
     if (user) {
-      toast.success('Welcome back!');
+      toast({ title: 'Welcome back!' }); // Corrected usage
     }
     return user;
   };
 
   const signOut = async () => {
     await firebaseSignOut();
-    toast.success('Signed out successfully');
+    toast({ title: 'Signed out successfully' }); // Corrected usage
   };
 
   return (

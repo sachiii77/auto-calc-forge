@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getCalculators, deleteCalculator } from "@/services/calculatorService";
 import { Calculator as CalculatorType } from "@/types/calculator";
 import { useToast } from "@/components/ui/use-toast";
+import { Timestamp } from "firebase/firestore";
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
@@ -51,6 +52,13 @@ const Dashboard = () => {
         toast({ title: "Failed to delete calculator", variant: "destructive" });
     }
   };
+  
+  const toDate = (timestamp: Timestamp | Date): Date => {
+    if (timestamp instanceof Timestamp) {
+      return timestamp.toDate();
+    }
+    return timestamp;
+  }
 
   if (loading || isLoadingCalculators) {
     return (
@@ -163,7 +171,7 @@ const Dashboard = () => {
                     onClick={() => navigate(`/calculator/${calc.id}`)}>
                     <div className="flex-grow">
                       <p className="font-semibold text-foreground">{calc.name}</p>
-                      <p className="text-sm text-muted-foreground">Created on {new Date(calc.createdAt).toLocaleDateString()}</p>
+                      <p className="text-sm text-muted-foreground">Created on {toDate(calc.createdAt).toLocaleDateString()}</p>
                     </div>
                     <div className="text-right mr-4">
                       <p className="font-semibold text-foreground">{calc.uses}</p>
