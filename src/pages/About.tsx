@@ -1,9 +1,9 @@
-import { Navigation } from "@/components/Navigation";
+
 import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Sparkles, Target, Users, Zap, Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CallToAction } from "@/components/CallToAction";
+import PageHeader from "@/components/PageHeader";
 
 const About = () => {
   const values = [
@@ -53,24 +53,14 @@ const About = () => {
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gradient-bg">
-        <Navigation />
         
         <main className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
-            <Sparkles className="w-4 h-4" />
-            About CalcForge
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
-            Empowering Everyone to Create Calculators
-          </h1>
-          
-          <p className="text-xl text-muted-foreground">
-            We're on a mission to make calculator creation accessible to everyone, from students to professionals.
-          </p>
-        </div>
+        <PageHeader 
+            pillText="About CalcForge"
+            title="Empowering Everyone to Create Calculators"
+            subtitle="We're on a mission to make calculator creation accessible to everyone, from students to professionals."
+            icon={Sparkles}
+        />
 
         {/* Story Section */}
         <section className="max-w-4xl mx-auto space-y-12 mb-16">
@@ -142,21 +132,7 @@ const About = () => {
           </section>
         </section>
 
-        {/* CTA Section */}
-        <section className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-2xl bg-gradient-primary/10 border border-primary/20 animate-fade-in">
-          <h2 className="text-3xl font-bold text-foreground">
-            Join Our Community
-          </h2>
-          <p className="text-muted-foreground">
-            Be part of the calculator revolution. Start creating your own custom calculators today.
-          </p>
-          <Button variant="hero" size="lg" asChild>
-            <Link to="/">
-              <Sparkles className="w-5 h-5 mr-2" />
-              Get Started Free
-            </Link>
-          </Button>
-        </section>
+        <CallToAction />
       </main>
     </div>
     </>

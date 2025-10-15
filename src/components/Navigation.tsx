@@ -21,6 +21,7 @@ export const Navigation = () => {
     { path: "/features", label: "Features" },
     { path: "/gallery", label: "Gallery" },
     { path: "/about", label: "About" },
+    { path: "/contact", label: "Contact" },
     ...(user ? [{ path: "/dashboard", label: "Dashboard" }] : []),
   ];
 

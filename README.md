@@ -1,73 +1,105 @@
-# Welcome to your Lovable project
+# CalcForge: Your AI-Powered Calculator Generator
 
-## Project info
+CalcForge is a revolutionary web application that empowers you to create custom, production-ready calculators with nothing more than a simple English description. Powered by advanced AI, CalcForge transforms your ideas into fully functional tools in seconds. Whether you're a developer needing a quick solution or a professional looking to build a tool for your team, CalcForge is the ultimate shortcut to getting the job done.
 
-**URL**: https://lovable.dev/projects/a059147b-b4f8-4492-9abb-39910b595032
+## ✨ Features
 
-## How can I edit this code?
+*   **🤖 AI-Powered Generation:** Simply describe the calculator you need, and our AI will build it for you. No coding required.
+*   **🚀 Lightning-Fast:** Go from idea to a fully functional calculator in under a minute.
+*   **✅ Production-Ready:** Generates calculators with built-in validation, responsive design, and a clean, modern UI.
+*   **🔗 Easy Sharing:** Every calculator gets a unique, shareable link, making it easy to distribute your creations.
+*   **🔒 Secure & Private:** Your data is encrypted and stored securely, ensuring your privacy and peace of mind.
+*   **📈 Calculator History:** Keep track of all the calculators you've created and access them anytime.
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+CalcForge is built with a modern, robust, and scalable tech stack:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a059147b-b4f8-4492-9abb-39910b595032) and start prompting.
+*   **Frontend:** [React](https://reactjs.org/) with [Vite](https://vitejs.dev/) for a lightning-fast development experience.
+*   **Language:** [TypeScript](https://www.typescriptlang.org/) for type safety and improved code quality.
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/) for a utility-first styling workflow.
+*   **UI Components:** [shadcn/ui](https://ui.shadcn.com/) and [Radix UI](https://www.radix-ui.com/) for accessible and beautifully designed components.
+*   **Backend & Database:** [Supabase](https.supabase.io/) for authentication, database, and backend services.
+*   **Routing:** [React Router](https://reactrouter.com/) for seamless navigation.
+*   **State Management:** [TanStack Query (React Query)](https://tanstack.com/query/v4) for efficient data fetching and caching.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Getting Started
 
-**Use your preferred IDE**
+To get a local copy of CalcForge up and running, follow these steps.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Make sure you have the following installed:
 
-Follow these steps:
+*   [Node.js](https://nodejs.org/) (v14 or later)
+*   [npm](https://www.npmjs.com/) (or [Yarn](https://yarnpkg.com/)/[pnpm](https://pnpm.io/))
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1.  **Clone the repository:**
 
-# Step 3: Install the necessary dependencies.
-npm i
+    ```sh
+    git clone <your-repository-url>
+    cd <repository-directory>
+    ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+2.  **Install dependencies:**
 
-**Edit a file directly in GitHub**
+    ```sh
+    npm install
+    ```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3.  **Set up environment variables:**
 
-**Use GitHub Codespaces**
+    Create a `.env.local` file in the root of your project and add your Supabase credentials:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+    ```env
+    VITE_SUPABASE_URL=your_supabase_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
 
-## What technologies are used for this project?
+4.  **Run the development server:**
 
-This project is built with:
+    ```sh
+    npm run dev
+    ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+    The application will be available at `http://localhost:5173`.
 
-## How can I deploy this project?
+## ☁️ Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/a059147b-b4f8-4492-9abb-39910b595032) and click on Share -> Publish.
+This project can be easily deployed to any platform that supports Node.js applications. Here are the steps for deploying to Firebase Hosting:
 
-## Can I connect a custom domain to my Lovable project?
+1.  **Build the project:**
 
-Yes, you can!
+    ```sh
+    npm run build
+    ```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+2.  **Initialize Firebase (if you haven't already):**
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+    ```sh
+    firebase init hosting
+    ```
+
+3.  **Deploy to Firebase:**
+
+    ```sh
+    firebase deploy --only hosting
+    ```
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.

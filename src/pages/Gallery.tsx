@@ -1,10 +1,11 @@
-import { Navigation } from "@/components/Navigation";
+
 import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Calculator, TrendingUp, Heart, DollarSign, Ruler, Flame, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageHeader from "@/components/PageHeader";
 
 const Gallery = () => {
   const calculators = [
@@ -101,24 +102,14 @@ const Gallery = () => {
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gradient-bg">
-        <Navigation />
         
         <main className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-6 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-primary rounded-full text-primary-foreground text-sm font-medium shadow-primary">
-            <Sparkles className="w-4 h-4" />
-            Calculator Gallery
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
-            Explore Example Calculators
-          </h1>
-          
-          <p className="text-xl text-muted-foreground">
-            See what's possible with CalcForge. These are just a few examples of the calculators you can create.
-          </p>
-        </div>
+        <PageHeader 
+            pillText="Calculator Gallery"
+            title="Explore Example Calculators"
+            subtitle="See what's possible with CalcForge. These are just a few examples of the calculators you can create."
+            icon={Sparkles}
+        />
 
         {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">

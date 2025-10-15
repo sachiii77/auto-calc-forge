@@ -1,5 +1,5 @@
+
 import { useState, useCallback } from "react";
-import { Navigation } from "@/components/Navigation";
 import { SEO } from "@/components/SEO";
 import { CalculatorDescriptionForm } from "@/components/CalculatorDescriptionForm";
 import { CalculatorRunner } from "@/components/CalculatorRunner";
@@ -17,14 +17,11 @@ const Index = () => {
   const handleGenerate = useCallback(async (description: string) => {
     setIsGenerating(true);
     
-    // Simulate AI processing time (reduced for better UX)
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    // Find best matching calculator template
     const calculatorType = findBestCalculatorTemplate(description);
     const calculator = calculatorTemplates[calculatorType];
     
-    // Add to history
     addToHistory({
       title: calculator.title,
       description: description,
@@ -74,7 +71,6 @@ const Index = () => {
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gradient-bg">
-        <Navigation />
         <main className="container mx-auto px-4 py-8">
           {currentView === 'form' ? (
             <>
