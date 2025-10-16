@@ -1,39 +1,43 @@
 import { useState, useEffect } from "react";
+import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { db } from "@/integrations/firebase/client";
+import { useAuth } from "@/hooks/useAuth";
 
-export interface CalculatorHistoryItem {
+export interface Calculator {
   id: string;
-  title: string;
-  description: string;
-  timestamp: number;
+  code: string;
+  createdAt: Timestamp;
+  // Add any other fields from your Firestore document
 }
 
 export const useCalculatorHistory = () => {
-  const [history, setHistory] = useState<CalculatorHistoryItem[]>(() => {
-    const saved = localStorage.getItem("calculator-history");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { user } = useAuth();
+  const [history, setHistory] = useState<Calculator[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    localStorage.setItem("calculator-history", JSON.stringify(history));
-  }, [history]);
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
-  const addToHistory = (item: Omit<CalculatorHistoryItem, "id" | "timestamp">) => {
-    const newItem: CalculatorHistoryItem = {
-      ...item,
-      id: crypto.randomUUID(),
-      timestamp: Date.now(),
+    const fetchHistory = async () => {
+      try {
+        const q = query(collection(db, "calculators"), where("userId", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+        const calculators = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Calculator[];
+        setHistory(calculators);
+      } catch (error) {
+        console.error("Error fetching calculator history:", error);
+      }
+      setLoading(false);
     };
-    setHistory((prev) => [newItem, ...prev].slice(0, 10)); // Keep last 10
-  };
 
-  const clearHistory = () => {
-    setHistory([]);
-    localStorage.removeItem("calculator-history");
-  };
+    fetchHistory();
+  }, [user]);
 
-  const removeFromHistory = (id: string) => {
-    setHistory((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  return { history, addToHistory, clearHistory, removeFromHistory };
+  return { history, loading };
 };
