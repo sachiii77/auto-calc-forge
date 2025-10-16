@@ -16,11 +16,11 @@ const Features = lazy(() => import("./pages/Features"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
-const Auth = lazy(() => import("./pages/Auth"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const CreateCalculator = lazy(() => import("./pages/CreateCalculator"));
+const Auth = lazy(() => import("./pages/Auth"));
 const CalculatorPage = lazy(() => import("./pages/CalculatorPage"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -59,11 +59,10 @@ const App = () => (
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/create" element={<CreateCalculator />} />
+                    <Route path="/auth" element={<Auth />} />
                     <Route path="/calculator/:id" element={<CalculatorPage />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
-                <Route path="/auth" element={<Auth />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
           </AuthProvider>

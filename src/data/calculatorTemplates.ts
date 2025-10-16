@@ -17,7 +17,7 @@ export interface CalculatorTemplate {
   title: string;
   description: string;
   fields: CalculatorField[];
-  calculate: (values: Record<string, any>) => { result: string; breakdown?: string[] };
+  calculate: (values: Record<string, string>) => { result: string; breakdown?: string[] };
 }
 
 export const templates: CalculatorTemplate[] = [
@@ -85,9 +85,33 @@ export const templates: CalculatorTemplate[] = [
             try {
                 const result = math.evaluate(values.expression);
                 return { result: result.toString() };
-            } catch (error: any) {
-                return { result: `Error: ${error.message}` };
+            } catch (error) {
+                if (error instanceof Error) {
+                    return { result: `Error: ${error.message}` };
+                }
+                return { result: 'An unknown error occurred' };
             }
         },
     }
 ];
+
+export const calculatorTemplates: Record<string, CalculatorTemplate> = templates.reduce((acc, template) => {
+    acc[template.id] = template;
+    return acc;
+}, {} as Record<string, CalculatorTemplate>);
+
+
+export function findBestCalculatorTemplate(description: string): string {
+  const lowerDescription = description.toLowerCase();
+  if (lowerDescription.includes("bmi") || lowerDescription.includes("body mass")) {
+    return "bmi-calculator";
+  }
+  if (lowerDescription.includes("interest")) {
+    return "simple-interest-calculator";
+  }
+  if (lowerDescription.includes("math") || lowerDescription.includes("integrate") || lowerDescription.includes("derivative")) {
+    return "symbolic-math-calculator";
+  }
+  // Fallback to the first template
+  return templates[0].id;
+}

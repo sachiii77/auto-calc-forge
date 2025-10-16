@@ -1,7 +1,7 @@
 
 import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
-import { Sparkles, Zap, Code2, Share2, History, Lock, Palette, Rocket } from "lucide-react";
+import { Sparkles, Zap, Code2, Share2, History, Lock, Palette, Rocket, BrainCircuit, ScanText, Wand2 } from "lucide-react";
 import { CallToAction } from "@/components/CallToAction";
 import PageHeader from "@/components/PageHeader";
 
@@ -57,6 +57,24 @@ const Features = () => {
     }
   ];
 
+  const howItWorks = [
+    {
+      icon: ScanText,
+      title: "1. You Describe",
+      description: "Simply type in what you want your calculator to do. For example, 'a calculator for my daily calorie intake' or 'a tool to calculate mortgage payments.'"
+    },
+    {
+      icon: BrainCircuit,
+      title: "2. AI Analyzes",
+      description: "Our AI, powered by advanced language models, analyzes your description. It identifies the inputs, outputs, and the mathematical formula required."
+    },
+    {
+      icon: Wand2,
+      title: "3. Instant Generation",
+      description: "The AI then generates the necessary code and user interface, creating a fully functional and beautifully designed calculator ready for you to use and share."
+    }
+  ];
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -107,6 +125,37 @@ const Features = () => {
               </p>
             </Card>
           ))}
+        </div>
+
+        {/* How It Works Section */}
+        <div className="mb-16">
+          <PageHeader 
+              pillText="Behind the Magic"
+              title="How It Works"
+              subtitle="Creating your perfect calculator is as easy as 1-2-3. Here’s a glimpse into our AI-powered generation process."
+              icon={Wand2}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {howItWorks.map((step, index) => (
+              <Card 
+                key={index} 
+                className="p-6 space-y-4 hover:shadow-card transition-all duration-300 hover:scale-[1.02] animate-fade-in border-0 bg-card/50 backdrop-blur-sm"
+                style={{ animationDelay: `${(features.length + index) * 0.1}s` }}
+              >
+                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center text-primary">
+                  <step.icon className="w-6 h-6 text-primary-foreground" />
+                </div>
+                
+                <h3 className="text-xl font-semibold text-foreground">
+                  {step.title}
+                </h3>
+                
+                <p className="text-muted-foreground">
+                  {step.description}
+                </p>
+              </Card>
+            ))}
+          </div>
         </div>
 
         <CallToAction />

@@ -20,8 +20,8 @@ export const SEO = ({
   structuredData,
 }: SEOProps) => {
   const fullTitle = title.includes("Everything Calculator") ? title : `${title} | Everything Calculator`;
-  const siteUrl = typeof window !== "undefined" ? window.location.origin : "";
-  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+  const siteUrl =  window.location.origin;
+  const currentUrl =  window.location.href;
 
   const defaultStructuredData = {
     "@context": "https://schema.org",

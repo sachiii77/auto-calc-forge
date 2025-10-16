@@ -1,126 +1,125 @@
 
-import { useState } from "react";
-import { SEO } from "@/components/SEO";
+import { useForm, zodResolver } from "@mantine/form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, MessageSquare, User, Send } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import PageHeader from "@/components/PageHeader";
+import { CallToAction } from "@/components/CallToAction";
+import { toast } from "sonner";
+
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters long." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters long." }),
+});
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useForm({
+    validate: zodResolver(contactSchema),
+    initialValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. We'll get back to you shortly.",
-      variant: "success",
-    });
-
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+  const handleSubmit = (values: typeof form.values) => {
+    console.log(values);
+    toast.success("Your message has been sent!");
+    form.reset();
   };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      text: "support@everythingcalculator.com",
-      href: "mailto:support@everythingcalculator.com"
-    },
-    {
-      icon: Phone,
-      text: "(555) 123-4567",
-      href: "tel:5551234567"
-    },
-    {
-      icon: MapPin,
-      text: "123 Innovation Drive, Tech City, 12345",
-    }
-  ];
 
   return (
     <>
       <SEO
-        title="Contact Us - Get in Touch with Everything Calculator"
-        description="Have questions or feedback? Contact the Everything Calculator team. We're here to help you with our AI-powered calculator generator."
-        keywords="contact calculator generator, support, get in touch, AI calculator help, feedback"
+        title="Contact Us - Everything Calculator"
+        description="Get in touch with the Everything Calculator team. We\'d love to hear from you!"
+        keywords="contact, support, feedback, Everything Calculator"
       />
       <div className="min-h-screen bg-gradient-bg">
 
-        <main className="container mx-auto px-4 py-12">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 animate-fade-in">
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text-primary">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              We'd love to hear from you. Whether you have a question, a feature request, or just want to say hello, feel free to reach out.
-            </p>
-          </div>
+        <main className="container mx-auto px-4 py-12 space-y-24">
+          <PageHeader
+            pillText="Get in Touch"
+            title="Contact Us"
+            subtitle="We\'d love to hear from you! Whether you have a question, a feature request, or just want to say hi, feel free to reach out."
+            icon={Mail}
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <Card className="p-8 space-y-6 animate-fade-in glass">
-              <h2 className="text-3xl font-bold text-foreground">Send Us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-2">Name</label>
-                  <Input id="name" type="text" placeholder="Your Name" required className="bg-background/80" />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">Email</label>
-                  <Input id="email" type="email" placeholder="your@email.com" required className="bg-background/80" />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">Message</label>
-                  <Textarea id="message" placeholder="Your message..." required rows={5} className="bg-background/80" />
-                </div>
-                <Button type="submit" size="lg" disabled={isSubmitting} className="w-full">
-                  {isSubmitting ? "Sending..." : <>Send Message <Send className="w-4 h-4 ml-2" /></>}
-                </Button>
-              </form>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <Card className="animate-fade-in border-0 bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-2xl">Send us a message</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={form.onSubmit(handleSubmit)} className="space-y-6">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      placeholder="Your Name"
+                      className="pl-10"
+                      {...form.getInputProps("name")}
+                    />
+                    {form.errors.name && (
+                      <p className="text-red-500 text-sm mt-1">{form.errors.name}</p>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      type="email"
+                      placeholder="Your Email"
+                      className="pl-10"
+                      {...form.getInputProps("email")}
+                    />
+                    {form.errors.email && (
+                      <p className="text-red-500 text-sm mt-1">{form.errors.email}</p>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-muted-foreground" />
+                    <Textarea
+                      placeholder="Your Message"
+                      className="pl-10 pt-3 min-h-[150px]"
+                      {...form.getInputProps("message")}
+                    />
+                    {form.errors.message && (
+                      <p className="text-red-500 text-sm mt-1">{form.errors.message}</p>
+                    )}
+                  </div>
+                  <Button type="submit" size="lg" className="w-full">
+                    <Send className="w-5 h-5 mr-2" />
+                    Send Message
+                  </Button>
+                </form>
+              </CardContent>
             </Card>
 
-            {/* Contact Details */}
-            <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <Card className="p-8 space-y-4 glass">
-                <h2 className="text-2xl font-bold text-foreground">Contact Information</h2>
-                <ul className="space-y-4">
-                  {contactInfo.map((item, index) => (
-                    <li key={index} className="flex items-start gap-4">
-                      <item.icon className="w-6 h-6 mt-1 text-primary" />
-                      {item.href ? (
-                        <a href={item.href} className="text-muted-foreground hover:text-foreground transition-colors">
-                          {item.text}
-                        </a>
-                      ) : (
-                        <span className="text-muted-foreground">{item.text}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-              
-              <Card className="p-8 h-80 w-full glass">
-                {/* Map placeholder */}
-                <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center text-muted-foreground">
-                  <p>Map Placeholder</p>
-                </div>
-              </Card>
+            <div className="space-y-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <h3 className="text-2xl font-bold">Other ways to reach us</h3>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  We are a small, dedicated team passionate about creating the best calculator generator in the world. Your feedback is invaluable to us.
+                </p>
+                <p>
+                  For bug reports, please include as much detail as possible, including steps to reproduce the issue. For feature requests, let us know what you\'d like to build!
+                </p>
+                <p>
+                  You can also find us on social media, although email is the best way to get a quick response.
+                </p>
+              </div>
             </div>
           </div>
+
+          <CallToAction />
         </main>
       </div>
     </>
   );
 };
 
-export default Contact;
+export default Contact; 

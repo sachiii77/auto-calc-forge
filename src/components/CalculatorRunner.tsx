@@ -18,7 +18,7 @@ interface CalculatorConfig {
   title: string;
   description: string;
   fields: CalculatorField[];
-  calculate: (values: Record<string, any>) => { result: string; breakdown?: string[] };
+  calculate: (values: Record<string, string>) => { result: string; breakdown?: string[] };
 }
 
 interface CalculatorRunnerProps {
@@ -27,10 +27,10 @@ interface CalculatorRunnerProps {
 }
 
 export const CalculatorRunner = ({ config, onBack }: CalculatorRunnerProps) => {
-  const [values, setValues] = useState<Record<string, any>>({});
+  const [values, setValues] = useState<Record<string, string>>({});
   const [result, setResult] = useState<{ result: string; breakdown?: string[] } | null>(null);
 
-  const handleInputChange = (fieldName: string, value: any) => {
+  const handleInputChange = (fieldName: string, value: string) => {
     setValues(prev => ({ ...prev, [fieldName]: value }));
   };
 
@@ -100,7 +100,7 @@ export const CalculatorRunner = ({ config, onBack }: CalculatorRunnerProps) => {
                     type="number"
                     placeholder={field.placeholder}
                     value={values[field.name] || ""}
-                    onChange={(e) => handleInputChange(field.name, parseFloat(e.target.value) || 0)}
+                    onChange={(e) => handleInputChange(field.name, e.target.value)}
                     className="transition-colors focus:border-primary"
                   />
                 ) : (
