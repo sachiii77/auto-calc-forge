@@ -9,6 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
 import { Skeleton } from "@/components/ui/skeleton";
 import Layout from "@/components/Layout";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 // Lazy load route components for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -57,11 +58,18 @@ const App = () => (
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/create" element={<CreateCalculator />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/calculator/:id" element={<CalculatorPage />} />
                     <Route path="*" element={<NotFound />} />
+
+                    <Route path="/create" element={<ProtectedRoute />}>
+                      <Route path="/create" element={<CreateCalculator />} />
+                    </Route>
+
+                    <Route path="/dashboard" element={<ProtectedRoute />}>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                    </Route>
+
                 </Route>
               </Routes>
             </Suspense>
